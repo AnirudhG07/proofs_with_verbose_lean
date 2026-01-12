@@ -24,7 +24,8 @@ Exercise "03.1"
   Assume:
   Conclusion: ∃ x : ℝ, x*x = 16
 Proof:
-  sorry
+  Let's prove that 4 works
+  We compute
 QED
 
 /-
@@ -77,7 +78,9 @@ Exercise "03.2 Use of an existence"
   Assume: (h : ∃ n', n = n' + 3)
   Conclusion: n > 0
 Proof:
-  sorry
+  Since ∃ n', n = n' + 3 we get n' such that hn' : n = n' + 3
+  Since n = n' + 3 it suffices to prove that n' + 3 > 0
+  We compute
 QED
 
 /-
@@ -137,7 +140,14 @@ Exercise "03.3 Divisibility and addition."
   Assume: (h1 : a ∣ b) (h2 : a ∣ c)
   Conclusion: a ∣ b+c
 Proof:
-  sorry
+  Since a ∣ b we get k such that hk : b = a*k
+  Since a ∣ c we get l such that hl : c = a*l
+  Let's prove that ∃ m, b+c = a * m
+  Let's prove that k+l works: b+c = a * (k + l)
+  Calc
+    b+c = a*k + c from hk
+    _ = a*k + a*l from hl
+    _ = a*(k+l) by computation
 QED
 
 /-
@@ -201,6 +211,12 @@ Exercise "03.4 A composition of surjective functions is surjective"
   Assume: (hf : f is surjective) (hg : g is surjective)
   Conclusion: (g ∘ f) is surjective
 Proof:
-  sorry
+  Fix y
+  Since g is surjective we get w: ℝ such that hg': g w = y
+  Since f is surjective we get x: ℝ such that hf': f x = w
+  Let's prove that x works
+  Calc
+    (g ∘ f) x = g (f x) by computation
+    _         = g w from hf'
+    _         = y from hg'
 QED
-

@@ -73,7 +73,7 @@ Example "Positive square"
   Assume: (ha : a > 0)
   Conclusion: a^2 > 0
 Proof:
-  Since a > 0 ⇒ a^2 > 0 and a > 0 we conclude that a^2 > 0
+  Since a > 0 ⇒ a^2 > 0 and a>0 we conclude that a^2 > 0
 QED
 
 /-
@@ -90,7 +90,7 @@ Exercise "04.1 Using an implication"
   Assume: (h : x ≠ 0)
   Conclusion: |x| > 0
 Proof:
-  sorry
+  Since x ≠ 0 we conclude that |x| > 0
 QED
 
 /-
@@ -136,7 +136,8 @@ Exercise "04.2 Chaining implications, using your favorite style."
   Assume: (ha : a ≠ 0)
   Conclusion: |a|^2 > 0
 Proof:
-  sorry
+  Since a≠0 we get ha': |a| > 0
+  Since |a| > 0 and |a| > 0 ⇒ |a|^2 > 0 we conclude that |a|^2 >0
 QED
 
 /-
@@ -150,7 +151,8 @@ Exercise "04.3 Chaining implications, in the other style"
   Assume: (ha : a ≠ 0)
   Conclusion: |a|^2 > 0
 Proof:
-  sorry
+  Since |a| > 0 ⇒ |a|^2 > 0 it suffices to prove that |a| > 0
+  Since a ≠ 0 we conclude that |a| > 0
 QED
 
 /-
@@ -235,7 +237,9 @@ Exercise "04.4 Proving an implication"
   Assume:
   Conclusion: a > 0 ⇒ (a^2)^2 > 0
 Proof:
-  sorry
+  Assume ha: a>0
+  It suffices to prove that a^2 > 0
+  Since a > 0 we conclude that a^2 > 0
 QED
 
 
@@ -287,7 +291,10 @@ Exercise "04.5 The composition of a non-decreasing and a non-increasing function
   Assume: (hf : f is non-decreasing) (hg : g is non-increasing)
   Conclusion: (g ∘ f) is non-increasing
 Proof:
-  sorry
+  Fix x₁ x₂
+  Assume h: x₁ ≤ x₂
+  Since g is non-increasing it suffices to prove that f x₁ ≤  f x₂
+  Since f is non-decreasing and x₁ ≤ x₂ we conclude that f x₁ ≤ f x₂
 QED
 
 /-
@@ -300,16 +307,27 @@ Exercise "04.6 A composition of injective functions is injective."
   Assume: (hf : f is injective) (hg : g is injective)
   Conclusion: g ∘ f is injective
 Proof:
-  sorry
+  Fix x₁ x₂
+  Assume h: (g ∘ f) x₁ = (g ∘ f) x₂
+  Since g is injective and g (f x₁) = g (f x₂) we get h₁: f x₁ = f x₂
+  Since f is injective and f x₁ = f x₂ we conclude that x₁ = x₂
 QED
 
 Exercise "04.7 If a composition is injective then the first applied function is
           injective."
-  Given: (f g : ℝ → ℝ)
+  Given: (f g : ℝ → ℝ )
   Assume:
-  Conclusion: g ∘ f is injective ⇒ f is injective
+  Conclusion: g ∘ f is injective → f is injective
 Proof:
-  sorry
+  Assume hgf
+  Fix x1 x2
+  Assume hff : f x1 = f x2
+  Since g ∘ f is injective it suffices to prove that (g ∘ f) x1 = (g ∘ f) x2
+  Let's prove that (g ∘ f) x1 = (g ∘ f) x2
+  Calc
+  (g ∘ f) x1 = g (f x1) by computation
+  _ = g (f x2) since f x1 = f x2
+  _ = (g ∘ f) x2 by computation
 QED
 
 /-
@@ -345,7 +363,8 @@ Exercise "04.8 Using one of the implications from an equivalence"
   Assume: (h : P ⇔ R) (h' : R)
   Conclusion: P
 Proof:
-  sorry
+  Since R ⇔ P we get H : R ⇒ P
+  Since R ⇒ P and R we conclude that P
 QED
 
 Exercise "04.9 Using one of the implications from an equivalence. A more complex case."
@@ -353,7 +372,13 @@ Exercise "04.9 Using one of the implications from an equivalence. A more complex
   Assume: (hPR : P ⇔ R) (hQRS : (Q ⇒ R) ⇒ S)
   Conclusion: (Q ⇒ P) ⇒ S
 Proof:
-  sorry
+  Since P ⇔ R we get H₁ : P ⇒ R
+  Assume hqp
+  Fact H₀: Q ⇒ R by -- A bit elaborate, could be shorter
+    Assume hq
+    Since Q and Q ⇒ P we get hp: P
+    Since P and P ⇒ R we conclude that R
+  Since Q ⇒R and (Q ⇒ R) ⇒ S we conclude that S
 QED
 
 /-
@@ -380,7 +405,16 @@ Exercise "04.10 Numbers divided by zero."
   Assume:
   Conclusion: 0 ∣ a ⇔ a = 0
 Proof:
-  sorry
+  Let's first prove that 0 ∣ a ⇒ a = 0
+  Assume h₀
+  Since 0 ∣ a we get m such that hm: a = 0*m
+  Since a = 0*m we conclude that a = 0
+  Let's now prove that a = 0 ⇒ 0 ∣ a
+  Assume h₁
+  Let's prove that 0 works -- basically 0 * any integer = 0 = a works
+  Calc
+    a = 0 by hypothesis
+    _ = 0 * 0 by computation
 QED
 
 /-
@@ -424,7 +458,8 @@ Exercise "04.11 Rewriting a statement to change the goal before concluding."
   Assume: (h : P ⇔ R) (h' : P)
   Conclusion: R
 Proof:
-  sorry
+  Since P ⇔ R it suffices to prove that P
+  We conclude by hypothesis
 QED
 
 /-
