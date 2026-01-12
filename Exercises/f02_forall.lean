@@ -28,7 +28,9 @@ Exercise "02.1 The function that maps `x` to `x³` is odd."
   Assume:
   Conclusion: (fct x ↦ x^3) is odd
 Proof:
-  sorry
+  Fix x : ℝ
+  Let's prove that (-x)^3 = -x^3
+  We compute
 QED
 
 /-
@@ -60,7 +62,7 @@ Exercise "02.2 Specializing a parity assumption to create an intermediate fact."
   Assume: (hf : f is odd)
   Conclusion: f (-3) = -f 3
 Proof:
-  sorry
+  Since f is odd we conclude that f (-3) = - f 3
 QED
 
 /-
@@ -122,7 +124,10 @@ Exercise "02.3 Precomposing by an even function leads to an even function."
   Assume: (hf : f is even)
   Conclusion: (g ∘ f) is even
 Proof:
-  sorry
+  Fix x₀
+  Calc
+    (g ∘ f) (-x₀) = g (f (-x₀)) by computation
+    _ = g (f x₀) since f is even
 QED
 
 Exercise "02.4 Any composition of odd functions is odd."
@@ -130,6 +135,10 @@ Exercise "02.4 Any composition of odd functions is odd."
   Assume: (hf : f is odd) (hg : g is odd)
   Conclusion: (g ∘ f) is odd
 Proof:
-  sorry
+  Fix x₀
+  Calc
+    (g ∘ f) ( -x₀) = g ( f (-x₀)) by computation
+    _ = g ( - f x₀) since f is odd
+    _ = - g ( f x₀) since g is odd
+    _ = - (g ∘ f) x₀ by computation
 QED
-

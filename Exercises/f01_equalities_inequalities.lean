@@ -41,7 +41,7 @@ Exercise "01.1 Purely algebraic computation that looks less easy"
   Assume:
   Conclusion: (a + b)^3 + (a - b)^3 = 6*a*b^2 + 2*a^3
 Proof:
-  sorry
+  We compute
 QED
 
 /-
@@ -98,7 +98,10 @@ Exercise "01.2 Computation in two steps, using an assumption."
   Assume: (ha : a = -b)
   Conclusion: b + b*(a + b) = b
 Proof:
-  sorry
+  Calc
+    b + b*(a+b) = b + b*(-b + b) from ha
+    _ = b + b*0 by computation
+    _ = b by computation
 QED
 
 Exercise "01.3 Computation in four steps, using an assumption."
@@ -106,7 +109,12 @@ Exercise "01.3 Computation in four steps, using an assumption."
   Assume: (h : a = -b) (h' : b + c = 0)
   Conclusion: b*(a - c) = 0
 Proof:
-  sorry
+  Calc
+    b*(a-c) = -b*(c-a) by computation
+    _ = -b*(c - (-b)) from h
+    _ = -b*(c + b) by computation
+    _ = -b*0 since b+c = 0
+    _ = 0 by computation
 QED
 
 /-
@@ -119,7 +127,7 @@ Example "A first inequality"
   Conclusion: a + b ≤ 3*b
 Proof:
   Calc
-    a + b ≤ 2*b + b since a ≤ 2*b
+    a + b ≤ 2*b + b from h
     _     = 3*b     by computation
 QED
 
@@ -128,7 +136,9 @@ Exercise "01.4 Inequality"
   Assume: (h : b ≤ a)
   Conclusion: a + b ≤ 2*a
 Proof:
-  sorry
+  Calc
+    a + b ≤ a + a from h
+    _ ≤ 2*a by computation
 QED
 
 Exercise "01.5 Inequality"
@@ -136,7 +146,9 @@ Exercise "01.5 Inequality"
   Assume: (h : a + b ≤ 3)
   Conclusion: 2*a + b ≤ a + 3
 Proof:
-  sorry
+  Calc
+    2*a + b ≤ a + a + b by computation
+    _ ≤ a + 3 from h
 QED
 
 /-
@@ -163,7 +175,11 @@ Exercise "01.6 Inequalities and strict inequalities"
   Assume: (h : 2*a + b ≤ 3) (hb : a < 5)
   Conclusion: 3*a + b < 8
 Proof:
-  sorry
+  Calc
+    3*a + b ≤ 2*a + b + a by computation
+    _ ≤ 3 + a from h
+    _ < 3+5 from hb
+    _ = 8 by computation
 QED
 
 
@@ -189,6 +205,8 @@ Exercise "01.7 Inequality with two justification items"
   Assume: (h : a + b ≤ 2) (h' : a ≥ 0)
   Conclusion: a*(a + b) + a ≤ 3*a
 Proof:
-  sorry
+  Calc
+    -- a*(a + b) + a ≤ a*2 + a from h -- YOU CAN DO THIS SIMPLY
+    a*(a + b) + a ≤ a*2 + a since a+b ≤ 2 and a ≥ 0
+    _ ≤ 3*a by computation
 QED
-
