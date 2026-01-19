@@ -34,7 +34,8 @@ Exercise "05.1 Proving a disjunction"
   Assume:
   Conclusion: 1 + 1 = 2 ∨ 1 + 3 = 17
 Proof:
-  sorry
+  Let's prove that 1+1 = 2
+  We compute
 QED
 
 /-
@@ -58,7 +59,7 @@ Proof:
   Assume ha : a = 2
   Calc
     a^2 = 2^2 since a = 2
-    _   = 4   by computation
+    _ = 4   by computation
   Assume ha : a = -2
   Calc
     a^2 = (-2)^2 since a = -2
@@ -70,7 +71,15 @@ Exercise "05.2 Proof by cases"
   Assume: (h : a = 2 ∨ a = -3)
   Conclusion: a^2 + a = 6
 Proof:
-  sorry
+  We discuss depending on whether a = 2 or a = -3
+  Assume ha : a = 2
+  Calc
+    a^2 + a = (2)^2 +2 since a = 2
+    _ = 6 by computation
+  Assume hb : a = -3
+  Calc
+    a^2 + a = (-3)^2 + (-3) since a = (-3)
+    _ = 6 by computation
 QED
 
 /-
@@ -147,11 +156,24 @@ Exercise "05.3 A disjunction proven after a proof by cases."
   Assume:
   Conclusion: x^2 = y^2 ⇒ x = y ∨ x = -y
 Proof:
-  sorry
+  Assume hyp : x^2 = y^2
+  Fact H: x^2 - y^2 = (x-y)*(x+y) by computation
+  Since x^2 = y^2 we get h₀: (x-y)*(x+y) = 0
+  -- Lean cant tell if there is another case that apart from x=y and x=-y,
+  -- So by tellin h₀, it is able to conclude this
+  We discuss depending on whether x+y =0 or x-y = 0
+  -- Case: x+y = 0
+  Assume h₁
+  It suffices to prove that x = -y
+  Since x+y = 0 we conclude that x=-y
+  -- Case: x-y = 0
+  Assume h₂
+  It suffices to prove that x = y
+  Since x-y = 0 we conclude that x=y
 QED
 
 /-
-The following exercise uses the notions of even and odd for integers.
+The following exercise uses the notions of odd and even for integers.
 
 By definition, a relative integer `n` is even if `∃ k, n = 2*k`.
 By definition, a relative integer `n` is odd if `∃ k, n = 2*k + 1`.
@@ -166,7 +188,21 @@ Exercise-lemma mul_succ_pair "05.4 n(n+1) is always even"
   Assume:
   Conclusion: n*(n+1) is even
 Proof:
-  sorry
+  We discuss depending on whether n is even or n is odd
+  Assume hn : n is even
+  Since n is even we get k₁ such that hk₁ : n = 2*k₁
+  Let's prove that k₁ *(2 * k₁ + 1) works
+
+  Calc
+    n*(n + 1) = (2*k₁)*(2*k₁ + 1) since n = 2*k₁
+    _         = 2*(k₁ *(2*k₁ + 1)) by computation
+  Assume hn : n is odd
+  Since n is odd we get k₂ such that hk₂ : n = 2*k₂ + 1
+  Let's prove that (k₂ + 1)*(2*k₂ + 1) works
+  Calc
+    n*(n + 1) = (2*k₂ + 1)*((2*k₂ + 1) + 1) since n = 2*k₂ + 1
+    _         = (2*k₂ + 1)*(2*(k₂ + 1)) by computation
+    _         = 2*((k₂ + 1)*(2*k₂ + 1)) by computation
 QED
 
 /-
@@ -187,7 +223,23 @@ Exercise "05.5 An integer is even if and only if its square is even."
   Assume:
   Conclusion: n is even ⇔ n^2 is even
 Proof:
-  sorry
+  Let's first prove that n is even → n^2 is even
+  Assume he
+  Since n is even we get m such that hm : n=2*m
+  Let's prove that 2*m*m works
+  Calc
+    n^2= (2*m)^2 since n=2*m
+    _= 2*(2*m*m) by computation
+  Let's now prove that n^2 is even ⇒ n is even
+  Assume hse
+  Since n^2 is even we get k such that hk : n^2 = 2*k
+  Since n*(n + 1) is even we get l such that hl : n*(n + 1) = 2*l
+  Let's prove that l - k works
+  Calc
+    n = (n*(n + 1)) - n^2 by computation
+    _ = 2*l - 2*k since n^2 = 2*k and n*(n + 1) = 2*l
+    _ = 2*(l - k) by computation
+
 QED
 
 /-
@@ -202,5 +254,27 @@ Exercise "05.6 A characterization of non-decreasing functions."
   Assume:
   Conclusion: f is non-decreasing ⇔ (∀ x y, x < y ⇒ f x ≤ f y)
 Proof:
-  sorry
+  -- Note: We need x ≤ y, since definition of non-decreasing is ∀ x₁ x₂, x₁ ≤ x₂ ⇒ f x₁ ≥ f x₂
+
+  -- LHS => RHS
+  Let's first prove that f is non-decreasing ⇒ (∀ x y, x < y ⇒ f x ≤ f y)
+  Assume fnd
+  Fix x y
+  Assume xly
+  Since x < y we get hxley: x ≤ y
+  Since f is non-decreasing and x ≤ y we conclude that f x ≤ f y
+
+  -- RHS => LHS
+  Let's now prove that (∀ x y, x < y ⇒ f x ≤ f y) ⇒ f is non-decreasing
+  Assume fxly
+  Fix x y
+  Assume xley
+  -- Since fxly helps us for the case x < y, we need to divide into 2 cases
+  We discuss depending on whether x= y or x < y
+  Assume xey
+  Since x = y we get hfe: f x = f y
+  Since f x = f y we conclude that f x ≤ f y
+  -- Now for x < y
+  Assume xly
+  Since ∀ (x y : ℝ), x < y ⇒ f x ≤ f y and x < y we conclude that f x ≤ f y
 QED
