@@ -37,7 +37,12 @@ Exercise "06.1 Proving a conjunction."
   Assume: (ha : a > 0)
   Conclusion: 2*a > 0 ∧ (a^2)^2 > 0
 Proof:
-  sorry
+  Let's first prove that 2*a > 0
+  Since a > 0 we conclude that 2*a > 0
+
+  Let's now prove that (a^2)^2 > 0
+  It suffices to prove that a^2 > 0
+  Since a > 0 we conclude that a^2 > 0
 QED
 
 /-
@@ -108,7 +113,8 @@ Exercise "06.2 Using a conjunction"
   Assume: (hab : a ≤ b ∧ b ≤ 1)
   Conclusion: a ≤ 1
 Proof:
-  sorry
+  Since a ≤ b ∧ b ≤ 1 we get halb: a ≤ b and hb: b ≤ 1
+  Since a ≤ b and b ≤ 1 we conclude that a ≤ 1
 QED
 
 Exercise "06.3 Using a conjunction"
@@ -116,7 +122,10 @@ Exercise "06.3 Using a conjunction"
   Assume: (hab : 0 ≤ b ∧ a ≤ 1)
   Conclusion: a*b ≤ b
 Proof:
-  sorry
+  Since 0 ≤ b ∧ a ≤ 1 we get ha: a ≤ 1 and hb: 0 ≤ b
+  Calc
+    a*b ≤ 1*b since a ≤ 1 and 0 ≤ b
+    _   ≤ b by computation
 QED
 
 /-
@@ -161,7 +170,9 @@ Exercise "06.4 Using a lemma from the database whose conclusion is a
   Assume: (hx : x ≥ max a b) (ha : a ≥ 1)
   Conclusion: x ≥ 1
 Proof:
-  sorry
+  Since x ≥ max a b we get hm: x ≥ a ∧ x ≥ b
+  Since x ≥ a ∧ x ≥ b we get ha': x ≥ a and hb: x ≥ b
+  Since x ≥ a and a ≥ 1 we conclude that x ≥ 1
 QED
 
 /-
@@ -194,7 +205,16 @@ Exercise "06.5 Divisibility and gcd"
   Assume:
   Conclusion: a ∣ b ⇔ gcd a b = a
 Proof:
-  sorry
+  Let's first prove that a ∣ b ⇒ gcd a b = a
+  Assume hab
+  Since a ∣ a and a ∣ b we get hg: a ∣ gcd a b
+  Fact H: gcd a b ∣  a by computation
+  Since gcd a b ∣ a and a ∣ gcd a b we conclude that gcd a b  = a
+
+  Let's now prove that gcd a b = a ⇒ a ∣ b
+  Assume hg
+  Fact H: gcd a b ∣ b by computation
+  Since gcd a b ∣ b and gcd a b = a we conclude that a ∣ b
 QED
 
 /-
@@ -212,6 +232,19 @@ Exercise "06.6 A characterization of the identity function"
   Assume: (h : f is non-decreasing) (h' : ∀ x, f (f x) = x)
   Conclusion: ∀ x, f x = x
 Proof:
-  sorry
+  Fix x
+  Since ∀ x, f (f x) = x we get hf: f (f x) = x
+  We discuss depending on whether x ≤ f x or f x ≤ x
+  Assume h₁ : x ≤ f x
+  Fact H: f x ≤ x by
+    Calc
+      f x ≤ f (f x) since f is non-decreasing and x ≤ f x
+      _   ≤ x       from hf
+  Since f x ≤ x and x ≤ f x we conclude that f x = x
+  Assume h₂ : f x ≤ x
+  Fact H: x ≤ f x by
+    Calc
+      x = f (f x) from hf
+      _ ≤ f x     since f is non-decreasing and f x ≤ x
+  Since f x ≤ x and x ≤ f x we conclude that f x = x
 QED
-
